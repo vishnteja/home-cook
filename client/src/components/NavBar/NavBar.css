@@ -1,0 +1,23 @@
+.NavBar-Wrapper {
+  background-color: rgb(253, 249, 249);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 40px;
+  color: #000;
+}
+
+.NavBar-Title {
+  font-weight: bold;
+  padding-left: 1rem;
+}
+
+.NavBar-Link {
+  padding: 0.8rem;
+  color: #828384;
+  transition: 0.7s color ease;
+}
+
+.NavBar-Link:hover {
+  color: #fff;
+}

@@ -1,0 +1,11 @@
+#vish {
+  text-align: center;
+  font-size: 30px;
+  padding: 80px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  max-width: 300px;
+  max-height: 200px;
+}
