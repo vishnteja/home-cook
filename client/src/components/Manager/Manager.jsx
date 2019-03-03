@@ -8,10 +8,10 @@ class Manager extends Component {
   render() {
     return (
       <React.Fragment>
-        <Switch>
+        {/* <Switch>
           <Route path="/addDeli" component={AddDeli} exact />
           <Route path="/addHK" component={AddHK} exact />
-        </Switch>
+        </Switch> */}
       </React.Fragment>
     );
   }

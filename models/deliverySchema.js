@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 
-let Schema = mongoose.Schema;
-
-const deliverySchema = new Schema({
-  id: {
-    type: Number,
-    required: true
-  },
+const deliverySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -37,6 +31,4 @@ const deliverySchema = new Schema({
   }
 });
 
-const delivery = mongoose.model("delivery", deliverySchema);
-
-module.exports = delivery;
+module.exports = mongoose.model("deliveryDudes", deliverySchema);

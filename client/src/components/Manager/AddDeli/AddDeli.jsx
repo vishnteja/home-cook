@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./AddDeli.css";
-// import axios from "axios";
+import axios from "axios";
 
 class AddDeli extends Component {
   state = {
@@ -16,9 +16,24 @@ class AddDeli extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handlerSubmit = async e => {
-    e.preventDefault();
+  handlerSubmit = async event => {
+    event.preventDefault();
     // Update Database from here
+    try {
+      const newDeliveryDude = await axios.post("/api/delivery/", {
+        name: this.refs.name.value,
+        age: Number(this.refs.age.value),
+        gender: this.refs.gender.value,
+        mobile: Number(this.refs.mobile.value),
+        email: this.refs.email.value
+      });
+      this.setState({
+        response: `User ${newDeliveryDude.data.newDeliveryDude.name} created!`
+      });
+    } catch (err) {
+      this.setState({ response: err.message });
+      console.log("mess-up");
+    }
     console.log("Successfully added");
   };
 
@@ -87,8 +102,8 @@ class AddDeli extends Component {
               type="number"
               placeholder="ipsoo.raj@nik.com"
               name="mobile"
-              min="1"
-              max="120"
+              min="1000000000"
+              max="9999999999"
               onChange={this.onChangeHandler}
               ref="mobile"
               className="Add-User-Input"
@@ -102,6 +117,7 @@ class AddDeli extends Component {
               Reset
             </button>
           </form>
+          <p>{this.state.response}</p>
         </div>
       </div>
     );
