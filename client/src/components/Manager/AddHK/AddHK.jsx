@@ -30,7 +30,7 @@ class AddHK extends Component {
         address: this.refs.address.value
       });
       this.setState({
-        response: `User ${newHK.data.newHK.name} created!`
+        response: `Home Kitchen ${newHK.data.newHK.name} created!`
       });
     } catch (err) {
       this.setState({ response: err.message });
@@ -131,6 +131,7 @@ class AddHK extends Component {
               Reset
             </button>
           </form>
+          <p>{this.state.response}</p>
         </div>
       </div>
     );

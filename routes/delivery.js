@@ -4,6 +4,7 @@ const router = express.Router();
 // User models
 const Delivery = require("../models/deliverySchema");
 const HK = require("../models/hkSchema");
+const Menu = require("../models/menuSchema");
 
 //for deliverySchema
 
@@ -27,7 +28,7 @@ router.get("/delivery/:id", async (req, res) => {
     const deliveryDude = await Delivery.findById(req.params.id);
     res.send({ deliveryDude });
   } catch (err) {
-    res.status(404).send({ message: "User not found!" });
+    res.status(404).send({ message: "Delivery personnel not found!" });
   }
 });
 
@@ -58,7 +59,7 @@ router.put("/delivery/:id", async (req, res) => {
       req.params.id,
       req.body
     );
-    res.send({ message: "The user was updated" });
+    res.send({ message: "The delivery personnel was updated" });
   } catch (err) {
     res.status(400).send({ error: err });
   }
@@ -70,7 +71,7 @@ router.put("/delivery/:id", async (req, res) => {
 router.delete("/delivery/:id", async (req, res) => {
   try {
     const removeDeliveryDude = await Delivery.findByIdAndRemove(req.params.id);
-    res.send({ message: "The user was removed" });
+    res.send({ message: "The delivery personnel was removed" });
   } catch (err) {
     res.status(400).send({ error: err });
   }
@@ -98,7 +99,7 @@ router.get("/hk/:id", async (req, res) => {
     const hk = await HK.findById(req.params.id);
     res.send({ hk });
   } catch (err) {
-    res.status(404).send({ message: "User not found!" });
+    res.status(404).send({ message: "Home kitchen not found!" });
   }
 });
 
@@ -121,25 +122,91 @@ router.post("/hk/", async (req, res) => {
   }
 });
 
-// @route   PUT /api/delivery/:id
+// @route   PUT /api/hk/:id
 // @desc    Update a home kitchen
 // @access  Public
 router.put("/hk/:id", async (req, res) => {
   try {
     const updatedHK = await HK.findByIdAndUpdate(req.params.id, req.body);
-    res.send({ message: "The user was updated" });
+    res.send({ message: "The home kitchen was updated" });
   } catch (err) {
     res.status(400).send({ error: err });
   }
 });
 
-// @route   DELETE /api/delivery/:id
+// @route   DELETE /api/hk/:id
 // @desc    Delete a home kitchen
 // @access  Public
 router.delete("/hk/:id", async (req, res) => {
   try {
     const removeHK = await HK.findByIdAndRemove(req.params.id);
-    res.send({ message: "The user was removed" });
+    res.send({ message: "The home kitchen was removed" });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+//for menuSchema
+
+// @route   GET /api/menu/
+// @desc    Get all menu items
+// @access  Public
+router.get("/menu/", async (req, res) => {
+  try {
+    const menus = await Menu.find({});
+    res.send({ menus });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   GET /api/menu/:id
+// @desc    Get a specific menu item
+// @access  Public
+router.get("/menu/:id", async (req, res) => {
+  try {
+    const menu = await Menu.findById(req.params.id);
+    res.send({ menu });
+  } catch (err) {
+    res.status(404).send({ message: "Menu item not found!" });
+  }
+});
+
+// @route   POST /api/menu/
+// @desc    Create a menu item
+// @access  Public
+router.post("/menu/", async (req, res) => {
+  try {
+    const newMenu = await Menu.create({
+      name: req.body.name,
+      cost: req.body.cost,
+      count: req.body.count
+    });
+    res.send({ newMenu });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   PUT /api/menu/:id
+// @desc    Update a menu item
+// @access  Public
+router.put("/menu/:id", async (req, res) => {
+  try {
+    const updatedMenu = await Menu.findByIdAndUpdate(req.params.id, req.body);
+    res.send({ message: "The menu item was updated" });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   DELETE /api/menu/:id
+// @desc    Delete a menu item
+// @access  Public
+router.delete("/menu/:id", async (req, res) => {
+  try {
+    const removeMenu = await Menu.findByIdAndRemove(req.params.id);
+    res.send({ message: "The menu item was removed" });
   } catch (err) {
     res.status(400).send({ error: err });
   }

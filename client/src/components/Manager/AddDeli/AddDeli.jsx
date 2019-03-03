@@ -28,7 +28,9 @@ class AddDeli extends Component {
         email: this.refs.email.value
       });
       this.setState({
-        response: `User ${newDeliveryDude.data.newDeliveryDude.name} created!`
+        response: `Delivery personnel ${
+          newDeliveryDude.data.newDeliveryDude.name
+        } created!`
       });
     } catch (err) {
       this.setState({ response: err.message });

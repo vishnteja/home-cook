@@ -1,11 +1,11 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class AddItem extends Component {
   state = {
     name: "",
     cost: "",
-    count: "",
-    img: "https:picsum.photos/150/1000"
+    count: ""
   };
 
   onChangeHandler = event => {
@@ -15,7 +15,19 @@ class AddItem extends Component {
   handlerSubmit = async e => {
     e.preventDefault();
     // Update Database from here
-    console.log(this.state);
+    try {
+      const newMenu = await axios.post("/api/menu/", {
+        name: this.refs.name.value,
+        cost: Number(this.refs.cost.value),
+        count: Number(this.refs.count.value)
+      });
+      this.setState({
+        response: `Menu item ${newMenu.data.newMenu.name} created!`
+      });
+    } catch (err) {
+      this.setState({ response: err.message });
+    }
+    console.log("Successfully added");
   };
 
   render() {
@@ -71,7 +83,7 @@ class AddItem extends Component {
               Reset
             </button>
           </form>
-          <img src={this.state.img} alt="" />
+          <p>{this.state.response}</p>
         </div>
       </div>
     );
