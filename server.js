@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require("cors")());
 app.use(require("helmet")());
-app.use("/api", require("./routes/delivery"), (req, res) => {
+app.use("/api", require("./routes/apiEndpoints"), (req, res) => {
   console.log("Reached Server");
 });
 
