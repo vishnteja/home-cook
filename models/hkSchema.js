@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const deliverySchema = new mongoose.Schema({
+const hkSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -28,7 +28,11 @@ const deliverySchema = new mongoose.Schema({
   email: {
     type: String,
     required: true
+  },
+  address: {
+    type: String,
+    required: true
   }
 });
 
-module.exports = mongoose.model("deliveryDudes", deliverySchema);
+module.exports = mongoose.model("HK", hkSchema);

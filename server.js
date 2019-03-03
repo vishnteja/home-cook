@@ -1,42 +1,27 @@
-const mongoose = require("mongoose");
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
+require("./models/db");
+const app = express();
 
-let Schema = mongoose.Schema;
+const PORT = process.env.PORT || 5000;
 
-const deliverySchema = new Schema({
-  id: {
-    type: Number,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 33,
-    trim: true
-  },
-  gender: {
-    type: String,
-    required: true,
-    maxlength: 6,
-    trim: true,
-    enum: ["Male", "Female", "male", "female"]
-  },
-  age: {
-    type: Number,
-    min: 1,
-    max: 120
-  },
-  mobile: {
-    type: Number,
-    min: 1000000000,
-    max: 9999999999
-  },
-  email: {
-    type: String,
-    required: true
-  }
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(require("cors")());
+app.use(require("helmet")());
+app.use("/api", require("./routes/apiEndpoints"), (req, res) => {
+  console.log("Reached Server");
 });
 
-const delivery = mongoose.model("delivery", deliverySchema);
+// Production
+// if (process.env.NODE_ENV === 'production') {
+//   // Set static folder
+//   app.use(express.static('client/build'));
 
-module.exports = delivery;
+//   app.get('*', (req, res) => {
+//     res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+//   });
+// }
+
+app.listen(PORT, () => console.log(`App running on port ${PORT}`));

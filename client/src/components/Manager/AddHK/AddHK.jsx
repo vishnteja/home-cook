@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./AddHK.css";
-// import axios from "axios";
+import axios from "axios";
 
 class AddHK extends Component {
   state = {
@@ -20,7 +20,22 @@ class AddHK extends Component {
   handlerSubmit = async e => {
     e.preventDefault();
     // Update Database from here
-    console.log(this.state);
+    try {
+      const newHK = await axios.post("/api/hk/", {
+        name: this.refs.name.value,
+        age: Number(this.refs.age.value),
+        gender: this.refs.gender.value,
+        mobile: Number(this.refs.mobile.value),
+        email: this.refs.email.value,
+        address: this.refs.address.value
+      });
+      this.setState({
+        response: `Home Kitchen ${newHK.data.newHK.name} created!`
+      });
+    } catch (err) {
+      this.setState({ response: err.message });
+    }
+    console.log("Successfully added");
   };
 
   render() {
@@ -86,10 +101,10 @@ class AddHK extends Component {
             <label htmlFor="mobile">Mobile Number: </label>
             <input
               type="number"
-              placeholder="ipsoo.raj@nik.com"
+              placeholder="9xxxxxxxxx"
               name="mobile"
-              minLength="10"
-              maxLength="10"
+              min="1000000000"
+              max="9999999999"
               onChange={this.onChangeHandler}
               ref="mobile"
               className="Add-User-Input"
@@ -116,6 +131,7 @@ class AddHK extends Component {
               Reset
             </button>
           </form>
+          <p>{this.state.response}</p>
         </div>
       </div>
     );
