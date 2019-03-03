@@ -22,8 +22,13 @@
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+<<<<<<< HEAD
     "helmet": "^3.15.1",
     "mongoose": "^5.4.16",
     "nodemon": "^1.18.10"
+=======
+    "mongoose": "^5.4.16",
+    "react-spinners": "^0.3.2"
+>>>>>>> f8db207f8b581b92d3684bc5ac99dd4c249e196a
   }
 }

@@ -1,26 +1,54 @@
-import React from "react";
+import React, { Component } from "react";
 import "./NavBar.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-const NavBar = () => {
-  return (
-    <nav className="NavBar-Wrapper">
-      <div>
-        <h3 className="NavBar-Title">Home Cook</h3>
-      </div>
-      <div className="NavBar-Links">
-        <Link to="/" className="NavBar-Link">
-          Home
-        </Link>
-        <Link to="/addDeli" className="NavBar-Link">
-          Add DeliveryDude
-        </Link>
-        <Link to="/addHK" className="NavBar-Link">
-          Add Home Kitchen
-        </Link>
-      </div>
-    </nav>
-  );
-};
+class NavBar extends Component {
+  state = {
+    dummy: 0
+  };
+  NavBarLink = () => {
+    switch (this.props.type) {
+      case "Manager":
+        return (
+          <React.Fragment>
+            <Link to="/addDeli" className="NavBar-Link">
+              Add DeliveryDude
+            </Link>
+            <Link to="/addHK" className="NavBar-Link">
+              Add Home Kitchen
+            </Link>
+          </React.Fragment>
+        );
+      case "HK":
+        return (
+          <React.Fragment>
+            <Link to="/addMenu" className="NavBar-Link">
+              Add Menu
+            </Link>
+          </React.Fragment>
+        );
+      case "Customer":
+        break;
+      default:
+        return <React.Fragment />;
+    }
+  };
+
+  render() {
+    return (
+      <nav className="NavBar-Wrapper">
+        <div>
+          <h3 className="NavBar-Title">Home Cook</h3>
+        </div>
+        <div className="NavBar-Links">
+          <NavLink to="/" className="NavBar-Link">
+            Home
+          </NavLink>
+          {this.NavBarLink()}
+        </div>
+      </nav>
+    );
+  }
+}
 
 export default NavBar;
