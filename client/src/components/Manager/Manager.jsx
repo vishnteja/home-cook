@@ -86,12 +86,6 @@ class Manager extends Component {
 
     return (
       <React.Fragment>
-<<<<<<< HEAD
-        {/* <Switch>
-          <Route path="/addDeli" component={AddDeli} exact />
-          <Route path="/addHK" component={AddHK} exact />
-        </Switch> */}
-=======
         <div className="Table-Wrapper">
           <h1>Results: </h1>
           <Search searchValue={this.searchValue} />
@@ -109,7 +103,6 @@ class Manager extends Component {
           </table>
         </div>
         {this.props.children}
->>>>>>> f8db207f8b581b92d3684bc5ac99dd4c249e196a
       </React.Fragment>
     );
   }
