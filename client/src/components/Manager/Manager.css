@@ -18,7 +18,7 @@
 }
 
 thead {
-  background-color: #6d7ae0;
+  background-color: #16619e;
   border-radius: 100px;
 }
 
@@ -63,4 +63,8 @@ td {
   justify-content: center;
   height: 100vh;
   align-items: center;
+}
+
+#btnCh {
+  background-color: #6d7ae0;
 }

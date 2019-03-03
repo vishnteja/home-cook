@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { DropdownButton, Dropdown } from "react-bootstrap";
 import "./Manager.css";
 import Search from "./Search/Search";
 import Value from "../utils/table/Value";
@@ -62,6 +62,22 @@ class Manager extends Component {
       this.setState({ data: { deli: this.state.allDeli } });
   };
 
+  onSelectHandler = e => {
+    switch (e) {
+      case "1":
+        // get the delivery table and store an array of values in this.state.data.deli
+        console.log("Deli Selected");
+        break;
+      case "2":
+        // get the HK table and store an array of values in this.state.data.deli
+        console.log("HK Selected");
+        break;
+
+      default:
+        break;
+    }
+  };
+
   render() {
     let values;
 
@@ -89,6 +105,22 @@ class Manager extends Component {
         <div className="Table-Wrapper">
           <h1>Results: </h1>
           <Search searchValue={this.searchValue} />
+          <DropdownButton id="dropdown-item-button" title="Choose">
+            <Dropdown.Item
+              eventKey="1"
+              onSelect={this.onSelectHandler}
+              as="button"
+            >
+              Delivery Person
+            </Dropdown.Item>
+            <Dropdown.Item
+              eventKey="2"
+              onSelect={this.onSelectHandler}
+              as="button"
+            >
+              Home Kitchen
+            </Dropdown.Item>
+          </DropdownButton>
           <table className="Table">
             <thead>
               <tr>
