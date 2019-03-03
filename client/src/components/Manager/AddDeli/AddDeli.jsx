@@ -32,7 +32,6 @@ class AddDeli extends Component {
       });
     } catch (err) {
       this.setState({ response: err.message });
-      console.log("mess-up");
     }
     console.log("Successfully added");
   };
@@ -100,7 +99,7 @@ class AddDeli extends Component {
             <label htmlFor="mobile">Mobile Number: </label>
             <input
               type="number"
-              placeholder="ipsoo.raj@nik.com"
+              placeholder="9xxxxxxxxx"
               name="mobile"
               min="1000000000"
               max="9999999999"
