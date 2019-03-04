@@ -17,6 +17,7 @@ app.use("/api", require("./routes/apiEndpoints"), (req, res) => {
 });
 
 // Production
+// testing production remote
 // Set static folder
 app.use(express.static("client/build"));
 app.get("*", (req, res) => {
