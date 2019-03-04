@@ -1,76 +1,74 @@
 import React, { Component } from "react";
+import axios from "axios";
+// GUI components
+import { GridLoader } from "react-spinners";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 import "./Manager.css";
 import Search from "../utils/Search/Search";
 import Value from "../utils/table/Value";
-import { GridLoader } from "react-spinners";
 
 class Manager extends Component {
   state = {
-    data: {
-      deli: [
-        {
-          id: 1,
-          name: "Googler Jmaes",
-          gender: "Male",
-          age: 29,
-          mobile: 9999988888,
-          email: "jmaes@google.com"
-        },
-        {
-          id: 2,
-          name: "Samert Jmaes",
-          gender: "Female",
-          age: 22,
-          mobile: 9999988888,
-          email: "jmaes@google.com"
-        },
-        {
-          id: 3,
-          name: "Sasd Jmaes",
-          gender: "Male",
-          age: 12,
-          mobile: 9999988888,
-          email: "jmaes@google.com"
-        }
-      ]
-    },
-    allDeli: null,
+    data: null,
+    delivery_data: null,
+    hk_data: null,
+    option: 1,
+    // display_data: null,
     error: ""
   };
 
   // Need this for getting data from database
-  // async componentDidMount() {
-  //   try {
-  //     const users = await axios("/api/users/");
-  //     this.setState({ data: users.data });
-  //   } catch (err) {
-  //     this.setState({ error: err.message });
-  //   }
-  // }
+  async componentDidMount() {
+    try {
+      let delivery_response = await axios("/api/delivery/");
+      let hk_response = await axios("/api/hk/");
+      this.setState({ delivery_data: delivery_response.data.deliveryDudes });
+      this.setState({ hk_data: hk_response.data.hks });
+      this.setState({ option: 1 });
+      this.setState({ data: this.state.delivery_data });
+    } catch (err) {
+      this.setState({ error: err.message });
+    }
+  }
 
   searchValue = async value => {
-    let allDeli = [this.state.data.deli];
-    if (this.state.allDeli === null) this.setState({ allDeli });
+    // Copy the array
+    let list_data;
+    switch (this.state.option) {
+      case 1:
+        list_data = [...this.state.delivery_data];
+        break;
+      case 2:
+        list_data = [...this.state.hk_data];
+        break;
+      default:
+        return;
+    }
 
-    let deli = this.state.data.deli.filter(({ name }) =>
+    if (this.state.list_data === null) this.setState({ list_data });
+
+    let list_data_filtered = this.state.data.filter(({ name }) =>
       name.toLowerCase().includes(value.toLowerCase())
     );
 
-    if (deli.length > 0) this.setState({ data: { deli } });
-    if (value.trim() === "")
-      this.setState({ data: { deli: this.state.allDeli } });
+    if (list_data_filtered.length > 0)
+      this.setState({ data: list_data_filtered });
+
+    if (value.trim() === "") this.setState({ data: list_data });
   };
 
   onSelectHandler = e => {
     switch (e) {
       case "1":
         // get the delivery table and store an array of values in this.state.data.deli
-        console.log("Deli Selected");
+        this.setState({ data: this.state.delivery_data });
+        this.setState({ option: 1 });
         break;
       case "2":
         // get the HK table and store an array of values in this.state.data.deli
         console.log("HK Selected");
+        this.setState({ data: this.state.hk_data });
+        this.setState({ option: 2 });
         break;
 
       default:
@@ -83,10 +81,8 @@ class Manager extends Component {
 
     if (this.state.data)
       values =
-        this.state.data.deli &&
-        this.state.data.deli.map(val => (
-          <Value key={val.id} data={{ ...val }} />
-        ));
+        this.state.data &&
+        this.state.data.map(val => <Value key={val._id} data={{ ...val }} />);
     else
       return (
         <div className="Spinner-Wrapper">
@@ -97,7 +93,7 @@ class Manager extends Component {
 
     if (this.state.error) return <h1>{this.state.error}</h1>;
     if (this.state.data !== null)
-      if (!this.state.data.deli.length)
+      if (!this.state.data.length)
         return <h1 className="No-Users">No Results!</h1>;
 
     return (

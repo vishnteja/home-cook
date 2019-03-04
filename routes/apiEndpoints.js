@@ -178,6 +178,7 @@ router.get("/menu/:id", async (req, res) => {
 router.post("/menu/", async (req, res) => {
   try {
     const newMenu = await Menu.create({
+      hkname: req.body.hkname,
       name: req.body.name,
       cost: req.body.cost,
       count: req.body.count

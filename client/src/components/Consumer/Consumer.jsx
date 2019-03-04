@@ -1,39 +1,53 @@
 import React, { Component } from "react";
-import "./Consumer.css";
-import Value from "../utils/table/Food";
+import axios from "axios";
+// GUI components
 import { GridLoader } from "react-spinners";
+// import { DropdownButton, Dropdown } from "react-bootstrap";
+import "./Consumer.css";
 import Search from "../utils/Search/Search";
+import Value from "../utils/table/Food_hk";
 
 class Consumer extends Component {
   state = {
-    data: {
-      deli: [{ hkname: "Yolo", name: "Paneer Tadka", count: "10", cost: "200" }]
-    },
-    allDeli: null,
+    data: null,
+    food_data: null,
+    // display_data: null,
     error: ""
   };
 
-  searchValue = async value => {
-    let allDeli = [this.state.data.deli];
-    if (this.state.allDeli === null) this.setState({ allDeli });
+  // Need this for getting data from database
+  async componentDidMount() {
+    try {
+      let food_resp = await axios("/api/menu/");
+      this.setState({ food_data: food_resp.data.menus });
+      this.setState({ data: this.state.food_data });
+    } catch (err) {
+      this.setState({ error: err.message });
+    }
+  }
 
-    let deli = this.state.data.deli.filter(({ name }) =>
+  searchValue = async value => {
+    // Copy the array
+    let list_data = [...this.state.food_data];
+    if (this.state.list_data === null) this.setState({ list_data });
+
+    let list_data_filtered = this.state.data.filter(({ name }) =>
       name.toLowerCase().includes(value.toLowerCase())
     );
 
-    if (deli.length > 0) this.setState({ data: { deli } });
-    if (value.trim() === "")
-      this.setState({ data: { deli: this.state.allDeli } });
+    if (list_data_filtered.length > 0)
+      this.setState({ data: list_data_filtered });
+
+    if (value.trim() === "") this.setState({ data: list_data });
   };
 
   render() {
-    let list_items;
+    let values;
+
     if (this.state.data)
-      list_items =
-        this.state.data.deli &&
-        this.state.data.deli.map(val => (
-          <Value key={val.id} data={{ ...val }} />
-        ));
+      values =
+        this.state.data &&
+        this.state.data.map(val => <Value key={val._id} data={{ ...val }} />);
     else
       return (
         <div className="Spinner-Wrapper">
@@ -44,23 +58,24 @@ class Consumer extends Component {
 
     if (this.state.error) return <h1>{this.state.error}</h1>;
     if (this.state.data !== null)
-      if (!this.state.data.deli.length)
-        return <h1 className="No-Users">No Items Found!</h1>;
+      if (!this.state.data.length)
+        return <h1 className="No-Users">No Results!</h1>;
 
     return (
       <React.Fragment>
         <div className="Table-Wrapper">
-          <h1>Search Food:</h1>
+          <h1>Results: </h1>
           <Search searchValue={this.searchValue} />
           <table className="Table">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>HK Name</th>
+                <th>Item Name</th>
                 <th>Count</th>
                 <th>Cost</th>
               </tr>
             </thead>
-            <tbody>{list_items}</tbody>
+            <tbody>{values}</tbody>
           </table>
         </div>
         {this.props.children}

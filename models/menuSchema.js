@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 
 const menuSchema = new mongoose.Schema({
+  hkname: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 33,
+    trim: true
+  },
   name: {
     type: String,
     required: true,

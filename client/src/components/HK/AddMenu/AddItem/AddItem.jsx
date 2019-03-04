@@ -3,6 +3,7 @@ import axios from "axios";
 
 class AddItem extends Component {
   state = {
+    hkname: "",
     name: "",
     cost: "",
     count: ""
@@ -17,6 +18,7 @@ class AddItem extends Component {
     // Update Database from here
     try {
       const newMenu = await axios.post("/api/menu/", {
+        hkname: this.refs.hkname.value,
         name: this.refs.name.value,
         cost: Number(this.refs.cost.value),
         count: Number(this.refs.count.value)
@@ -36,6 +38,19 @@ class AddItem extends Component {
         <div className="AddUser-Wrapper">
           <h1>Add Food Item: </h1>
           <form onSubmit={this.handlerSubmit}>
+            <label htmlFor="hkname">Home Name:</label>
+            <input
+              type="text"
+              placeholder="For example: Rajiv Ipsoo"
+              name="hkname"
+              onChange={this.onChangeHandler}
+              ref="hkname"
+              className="Add-User-Input"
+              required
+              minLength="3"
+              maxLength="33"
+              id="hkname"
+            />
             <label htmlFor="name">Name:</label>
             <input
               type="text"
