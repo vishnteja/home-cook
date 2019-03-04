@@ -6,7 +6,7 @@ import { GridLoader } from "react-spinners";
 class HK extends Component {
   state = {
     data: {
-      deli: [{ name: "Paneer Tadka", count: "10", cost: "200" }]
+      deli: []
     },
     allDeli: null,
     error: ""

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 import "./Manager.css";
+import axios from "axios";
 import Search from "./Search/Search";
 import Value from "../utils/table/Value";
 import { GridLoader } from "react-spinners";
@@ -36,21 +37,25 @@ class Manager extends Component {
       ]
     },
     allDeli: null,
-    error: ""
+    error: "",
+    temp1: null,
+    temp2: null
   };
 
   // Need this for getting data from database
-  // async componentDidMount() {
-  //   try {
-  //     const users = await axios("/api/users/");
-  //     this.setState({ data: users.data });
-  //   } catch (err) {
-  //     this.setState({ error: err.message });
-  //   }
-  // }
+  async componentDidMount() {
+    try {
+      const deliveryDudes = await axios("/api/delivery/");
+      const hk = await axios("/api/hk/");
+      this.setState({ temp1: deliveryDudes.data, temp2: hk.data });
+    } catch (err) {
+      this.setState({ error: err.message });
+    }
+    console.log("Mounting");
+  }
 
   searchValue = async value => {
-    let allDeli = [this.state.data.deli];
+    let allDeli = [...this.state.data.deli];
     if (this.state.allDeli === null) this.setState({ allDeli });
 
     let deli = this.state.data.deli.filter(({ name }) =>
@@ -66,10 +71,18 @@ class Manager extends Component {
     switch (e) {
       case "1":
         // get the delivery table and store an array of values in this.state.data.deli
+        this.setState({ data: this.state.temp1 });
         console.log("Deli Selected");
         break;
       case "2":
         // get the HK table and store an array of values in this.state.data.deli
+        try {
+          // const hk = await axios("/api/hk/");
+          // this.setState({ data: hk.data });
+          this.setState({ data: this.state.temp2 });
+        } catch (err) {
+          this.setState({ error: err.message });
+        }
         console.log("HK Selected");
         break;
 
