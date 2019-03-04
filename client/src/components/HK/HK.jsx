@@ -1,25 +1,94 @@
 import React, { Component } from "react";
-import "./HK.css";
-import Value from "../utils/table/Food";
+import axios from "axios";
+// GUI components
 import { GridLoader } from "react-spinners";
+import { DropdownButton, Dropdown } from "react-bootstrap";
+import "./HK.css";
+import Search from "../utils/Search/Search";
+import Value from "../utils/table/Food_hk";
 
 class HK extends Component {
   state = {
-    data: {
-      deli: []
-    },
-    allDeli: null,
+    data: null,
+    food_data: null,
+    user_list: null,
+    selected_user: null,
     error: ""
   };
 
+  async componentDidMount() {
+    try {
+      let food_resp = await axios("/api/menu/");
+      this.setState({ food_data: food_resp.data.menus });
+
+      // Get user list
+      let food_data = [...this.state.food_data];
+      let user_list = [];
+      for (var i = 0; i < food_data.length; i++) {
+        user_list.push(food_data[i].hkname);
+      }
+      this.setState({ user_list: user_list });
+      this.setState({ selected_user: user_list[0] });
+
+      //filter based on selected_user from food_data
+      let food_data_filtered = this.state.food_data.filter(({ hkname }) =>
+        hkname.toLowerCase().includes(this.state.selected_user.toLowerCase())
+      );
+      this.setState({ data: food_data_filtered });
+    } catch (err) {
+      this.setState({ error: err.message });
+    }
+  }
+
+  searchValue = async value => {
+    // Copy the array
+    let list_data = [...this.state.data];
+    if (this.state.list_data === null) this.setState({ list_data });
+
+    let list_data_filtered = this.state.data.filter(({ name }) =>
+      name.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (list_data_filtered.length > 0)
+      this.setState({ data: list_data_filtered });
+
+    if (value.trim() === "") this.setState({ data: list_data });
+  };
+
+  // selected is string
+  setUserHandler = selected => {
+    this.setState({ selected_user: selected });
+    //filter based on selected_user
+    let food_data_filtered = this.state.food_data.filter(({ hkname }) =>
+      hkname.toLowerCase().includes(selected.toLowerCase())
+    );
+    this.setState({ data: food_data_filtered });
+  };
+
   render() {
-    let list_items;
-    if (this.state.data)
-      list_items =
-        this.state.data.deli &&
-        this.state.data.deli.map(val => (
-          <Value key={val.id} data={{ ...val }} />
+    let render_dropdown;
+    // val is a string in user_list
+    if (this.state.user_list)
+      render_dropdown =
+        this.state.user_list &&
+        this.state.user_list.map(val => (
+          <Dropdown.Item
+            eventKey={val}
+            // key is string
+            onSelect={this.setUserHandler}
+            as="button"
+          >
+            {val}
+          </Dropdown.Item>
         ));
+    else return <h1 className="No-Users">No Results!</h1>;
+
+    // render table
+    let values;
+    if (this.state.data)
+      values =
+        this.state.data &&
+        this.state.data.map(val => <Value key={val._id} data={{ ...val }} />);
     else
       return (
         <div className="Spinner-Wrapper">
@@ -30,22 +99,27 @@ class HK extends Component {
 
     if (this.state.error) return <h1>{this.state.error}</h1>;
     if (this.state.data !== null)
-      if (!this.state.data.deli.length)
-        return <h1 className="No-Users">No Items Found!</h1>;
+      if (!this.state.data.length)
+        return <h1 className="No-Users">No Results!</h1>;
 
     return (
       <React.Fragment>
         <div className="Table-Wrapper">
-          <h1>Menu: </h1>
+          <h1>Menu: {this.state.selected_user} </h1>
+          <DropdownButton id="dropdown-item-button" title="Choose Home Kitchen">
+            {render_dropdown}
+          </DropdownButton>
+          <Search searchValue={this.searchValue} />
           <table className="Table">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>HK Name</th>
+                <th>Item Name</th>
                 <th>Count</th>
                 <th>Cost</th>
               </tr>
             </thead>
-            <tbody>{list_items}</tbody>
+            <tbody>{values}</tbody>
           </table>
         </div>
         {this.props.children}
