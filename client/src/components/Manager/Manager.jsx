@@ -95,11 +95,11 @@ class Manager extends Component {
     if (this.state.data !== null)
       if (!this.state.data.length)
         return <h1 className="No-Users">No Results!</h1>;
-
+    let arr = ["Delivery Person", "Home Kitchen"];
     return (
       <React.Fragment>
         <div className="Table-Wrapper">
-          <h1>Results: </h1>
+          <h1>Showing {arr[parseInt(this.state.option, 10) - 1]} </h1>
           <Search searchValue={this.searchValue} />
           <DropdownButton id="dropdown-item-button" title="Choose">
             <Dropdown.Item
