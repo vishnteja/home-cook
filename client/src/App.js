@@ -11,6 +11,7 @@ import HK from "./components/HK/HK";
 import AddDeli from "./components/Manager/AddDeli/AddDeli";
 import AddHK from "./components/Manager/AddHK/AddHK";
 import AddMenu from "./components/HK/AddMenu/AddMenu";
+import Consumer from "./components/Consumer/Consumer";
 
 class App extends Component {
   state = {
@@ -35,6 +36,7 @@ class App extends Component {
           />
           <Route path="/manager" component={Manager} exact />
           <Route path="/hk" component={HK} exact />
+          <Route path="/consumer" component={Consumer} exact />
           <Route path="/addDeli" component={AddDeli} exact />
           <Route path="/addHK" component={AddHK} exact />
           <Route path="/addMenu" component={AddMenu} exact />

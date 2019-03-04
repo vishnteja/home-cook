@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 import "./Manager.css";
-import Search from "./Search/Search";
+import Search from "../utils/Search/Search";
 import Value from "../utils/table/Value";
 import { GridLoader } from "react-spinners";
 

@@ -27,9 +27,17 @@ class SignIn extends Component {
               </Link>
             </div>
             <div className="col">
-              <button className="btn btn-secondary btn-sm" id="vish">
-                Customer
-              </button>
+              <Link to={{ pathname: "/consumer" }}>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  id="vish"
+                  onClick={() => {
+                    this.props.onLog("Consumer");
+                  }}
+                >
+                  Customer
+                </button>
+              </Link>
             </div>
             <div className="col">
               <Link to={{ pathname: "/hk" }}>
