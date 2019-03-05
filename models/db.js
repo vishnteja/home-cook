@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 // Connection
 const db_url = process.env.MONGO_ATLAS_URI;
+//const db_url = process.env.MONGO_ATLAS_URI || mongodb://localhost:27017/homeDB;
 mongoose.connect(db_url, {
   // mongoose.connect("mongodb://localhost:27017/homeDB", {
   useNewUrlParser: true

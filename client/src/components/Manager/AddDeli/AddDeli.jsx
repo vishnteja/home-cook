@@ -42,7 +42,7 @@ class AddDeli extends Component {
     return (
       <div className="container">
         <div className="AddUser-Wrapper">
-          <h1>Add Delivery Person:</h1>
+          <div className="title">Add Delivery Person:</div>
           <form onSubmit={this.handlerSubmit}>
             <label htmlFor="name">Name:</label>
             <input
@@ -111,12 +111,14 @@ class AddDeli extends Component {
               required
               id="mobile"
             />
-            <button type="submit" className="Add-User-Submit">
-              Submit
-            </button>
-            <button type="reset" className="Add-User-Reset">
-              Reset
-            </button>
+            <div className="container-btn">
+              <button type="submit" className="Add-User-Submit">
+                Submit
+              </button>
+              <button type="reset" className="Add-User-Reset">
+                Reset
+              </button>
+            </div>
           </form>
           <p>{this.state.response}</p>
         </div>

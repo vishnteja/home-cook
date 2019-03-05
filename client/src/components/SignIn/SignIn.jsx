@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./SignIn.css";
 import { Link } from "react-router-dom";
+import iconManager from "../../icons/economy.png";
+import iconDish from "../../icons/dish.png";
+import iconWhisk from "../../icons/whisk.png";
 
 class SignIn extends Component {
   state = {
@@ -15,41 +18,44 @@ class SignIn extends Component {
           <div className="row" id="row-buttons">
             <div className="col">
               <Link to={{ pathname: "/manager" }}>
-                <button
+                <div
                   onClick={() => {
                     this.props.onLog("Manager");
                   }}
                   className="btn btn-primary btn-sm"
-                  id="vish"
+                  id="vishnu"
                 >
-                  Manager
-                </button>
+                  <img class="profile" src={iconManager} alt="" />
+                  <h3>Manager</h3>
+                </div>
               </Link>
             </div>
             <div className="col">
               <Link to={{ pathname: "/consumer" }}>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  id="vish"
+                <div
                   onClick={() => {
                     this.props.onLog("Consumer");
                   }}
+                  className="btn btn-primary btn-sm"
+                  id="vishnu"
                 >
-                  Customer
-                </button>
+                  <img class="profile" src={iconDish} alt="" />
+                  <h3>Consumer</h3>
+                </div>
               </Link>
             </div>
             <div className="col">
               <Link to={{ pathname: "/hk" }}>
-                <button
-                  className="btn btn-danger btn-sm"
-                  id="vish"
+                <div
                   onClick={() => {
                     this.props.onLog("HK");
                   }}
+                  className="btn btn-primary btn-sm"
+                  id="vishnu"
                 >
-                  Home Kitchen
-                </button>
+                  <img class="profile" src={iconWhisk} alt="" />
+                  <h3>Home Kitchen</h3>
+                </div>
               </Link>
             </div>
           </div>

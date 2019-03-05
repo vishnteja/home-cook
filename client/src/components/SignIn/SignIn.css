@@ -1,16 +1,13 @@
-#vish {
+#vishnu {
   align-content: center;
   text-align: center;
   font-size: 25px;
-  padding: 50px 10px;
-  /* padding-top: 50px; */
-  /* padding-bottom: 50px; */
+  padding: 40px 10px;
   border-radius: 5px;
   box-sizing: border-box;
   color: rgba(87, 80, 80, 0.774);
   width: 250px;
-  height: 220px;
-  /* max-height: 200px; */
+  height: 240px;
   background-color: rgb(255, 255, 255);
   border-style: solid;
   border-color: rgb(255, 255, 255);
@@ -18,10 +15,15 @@
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-
-#vish:hover {
+#vishnu:hover {
   background-color: rgba(136, 129, 129, 0.14);
   border-color: rgba(136, 129, 129, 0.14);
+}
+
+.profile {
+  padding-bottom: 20px;
+  height: 120px;
+  width: 100px;
 }
 
 #row-buttons {
