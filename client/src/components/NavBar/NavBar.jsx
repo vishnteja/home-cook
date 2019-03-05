@@ -38,7 +38,7 @@ class NavBar extends Component {
     return (
       <nav className="NavBar-Wrapper">
         <div>
-          <h3 className="NavBar-Title">Home Cook</h3>
+          <h3 className="NavBar-Title">Home Kitchen</h3>
         </div>
         <div className="NavBar-Links">
           <NavLink to="/" className="NavBar-Link">
