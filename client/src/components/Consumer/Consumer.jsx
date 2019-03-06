@@ -64,8 +64,9 @@ class Consumer extends Component {
     return (
       <React.Fragment>
         <div className="Table-Wrapper">
-          <h1>Results: </h1>
+          <h1 className="results-title">Results: </h1>
           <Search searchValue={this.searchValue} />
+          <div className="table-div" />
           <table className="Table">
             <thead>
               <tr>

@@ -36,7 +36,7 @@ class AddItem extends Component {
     return (
       <div className="container">
         <div className="AddUser-Wrapper">
-          <div className="title">Add Delivery Person:</div>
+          <div className="title">Add Menu Item:</div>
           <form onSubmit={this.handlerSubmit}>
             <label htmlFor="hkname">Home Name:</label>
             <input

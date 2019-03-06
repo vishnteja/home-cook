@@ -42,7 +42,7 @@ class AddHK extends Component {
     return (
       <div className="container">
         <div className="AddUser-Wrapper">
-          <div className="title">Add Delivery Person:</div>
+          <div className="title">Add Home Kitchen:</div>
           <form onSubmit={this.handlerSubmit}>
             <label htmlFor="name">Name:</label>
             <input

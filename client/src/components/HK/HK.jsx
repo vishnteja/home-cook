@@ -81,7 +81,13 @@ class HK extends Component {
             {val}
           </Dropdown.Item>
         ));
-    else return <h1 className="No-Users">No Results!</h1>;
+    else
+      return (
+        <div className="Spinner-Wrapper">
+          {" "}
+          <GridLoader color={"#333"} />{" "}
+        </div>
+      );
 
     // render table
     let values;

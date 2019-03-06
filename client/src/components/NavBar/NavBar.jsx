@@ -11,20 +11,26 @@ class NavBar extends Component {
       case "Manager":
         return (
           <React.Fragment>
-            <Link to="/addDeli" className="NavBar-Link">
-              Add DeliveryDude
-            </Link>
-            <Link to="/addHK" className="NavBar-Link">
+            <NavLink to="/manager" className="NavBar-Link">
+              Home
+            </NavLink>
+            <NavLink to="/addDeli" className="NavBar-Link">
+              Add Delivery Personnel
+            </NavLink>
+            <NavLink to="/addHK" className="NavBar-Link">
               Add Home Kitchen
-            </Link>
+            </NavLink>
           </React.Fragment>
         );
       case "HK":
         return (
           <React.Fragment>
-            <Link to="/addMenu" className="NavBar-Link">
-              Add Menu
-            </Link>
+            <NavLink to="/hk" className="NavBar-Link">
+              Home
+            </NavLink>
+            <NavLink to="/addMenu" className="NavBar-Link">
+              Add Menu Item
+            </NavLink>
           </React.Fragment>
         );
       case "Customer":
@@ -38,14 +44,11 @@ class NavBar extends Component {
     return (
       <nav className="NavBar-Wrapper">
         <div>
-          <h3 className="NavBar-Title">Home Kitchen</h3>
-        </div>
-        <div className="NavBar-Links">
           <NavLink to="/" className="NavBar-Link">
-            Home
+            <h3 className="NavBar-Title">Home Kitchen</h3>
           </NavLink>
-          {this.NavBarLink()}
         </div>
+        <div className="NavBar-Links">{this.NavBarLink()}</div>
       </nav>
     );
   }

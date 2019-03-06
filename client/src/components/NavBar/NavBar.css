@@ -12,7 +12,14 @@
   font-weight: bold;
   font-size: 40px;
   padding-left: 1rem;
-  color: rgba(87, 80, 80, 0.774);
+  /* color: rgba(87, 80, 80, 0.774); */
+  color: #828384;
+  transition: 0.7s color ease;
+}
+
+.NavBar-Title:hover {
+  color: rgba(60, 67, 131, 0.247);
+  text-decoration-line: none;
 }
 
 .NavBar-Link {
@@ -24,4 +31,5 @@
 
 .NavBar-Link:hover {
   color: rgba(60, 67, 131, 0.247);
+  text-decoration-line: none;
 }

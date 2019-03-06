@@ -68,3 +68,19 @@ td {
 #btnCh {
   background-color: #6d7ae0;
 }
+
+.results-title {
+  font-size: 30px;
+  color: rgba(39, 36, 36, 0.774);
+  font-weight: bold;
+  padding-bottom: 30px;
+  padding-top: 50px;
+}
+
+.table-div {
+  padding-top: 10px;
+}
+
+.Table {
+  width: 1215px;
+}
