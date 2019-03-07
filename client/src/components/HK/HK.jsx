@@ -22,6 +22,10 @@ class HK extends Component {
       this.setState({ food_data: food_resp.data.menus });
 
       // Get user list
+      let hk_response = await axios("/api/hk/");
+      let hk_data = hk_response.data.hks;
+      console.log(hk_data);
+
       let food_data = [...this.state.food_data];
       let user_list = [];
       for (var i = 0; i < food_data.length; i++) {
