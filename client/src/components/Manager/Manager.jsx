@@ -99,8 +99,9 @@ class Manager extends Component {
     return (
       <React.Fragment>
         <div className="Table-Wrapper">
-          <h1>Showing {arr[parseInt(this.state.option, 10) - 1]} </h1>
-          <Search searchValue={this.searchValue} />
+          <h1 className="results-title">
+            Showing {arr[parseInt(this.state.option, 10) - 1]}{" "}
+          </h1>
           <DropdownButton id="dropdown-item-button" title="Choose">
             <Dropdown.Item
               eventKey="1"
@@ -117,6 +118,8 @@ class Manager extends Component {
               Home Kitchen
             </Dropdown.Item>
           </DropdownButton>
+          <Search searchValue={this.searchValue} />
+          <div className="table-div" />
           <table className="Table">
             <thead>
               <tr>
