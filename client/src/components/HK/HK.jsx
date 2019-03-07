@@ -22,14 +22,11 @@ class HK extends Component {
       this.setState({ food_data: food_resp.data.menus });
 
       // Get user list
+      let user_list = [];
       let hk_response = await axios("/api/hk/");
       let hk_data = hk_response.data.hks;
-      console.log(hk_data);
-
-      let food_data = [...this.state.food_data];
-      let user_list = [];
-      for (var i = 0; i < food_data.length; i++) {
-        user_list.push(food_data[i].hkname);
+      for (var i = 0; i < hk_data.length; i++) {
+        user_list.push(hk_data[i].name);
       }
       this.setState({ user_list: user_list });
       this.setState({ selected_user: user_list[0] });

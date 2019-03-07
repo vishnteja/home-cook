@@ -1,13 +1,30 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 class AddItem extends Component {
   state = {
+    user_list: null,
     hkname: "",
     name: "",
     cost: "",
     count: ""
   };
+
+  async componentDidMount() {
+    try {
+      // Get user list
+      let user_list = [];
+      let hk_response = await axios("/api/hk/");
+      let hk_data = hk_response.data.hks;
+      for (var i = 0; i < hk_data.length; i++) {
+        user_list.push(hk_data[i].name);
+      }
+      this.setState({ user_list: user_list });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   onChangeHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -18,7 +35,7 @@ class AddItem extends Component {
     // Update Database from here
     try {
       const newMenu = await axios.post("/api/menu/", {
-        hkname: this.refs.hkname.value,
+        hkname: this.state.hkname,
         name: this.refs.name.value,
         cost: Number(this.refs.cost.value),
         count: Number(this.refs.count.value)
@@ -32,25 +49,33 @@ class AddItem extends Component {
     console.log("Successfully added");
   };
 
+  setUserHandler = selected => {
+    this.setState({ hkname: selected });
+  };
+
   render() {
+    let render_dropdown;
+    if (this.state.user_list)
+      render_dropdown =
+        this.state.user_list &&
+        this.state.user_list.map(val => (
+          <Dropdown.Item
+            eventKey={val}
+            // key is string
+            onSelect={this.setUserHandler}
+            as="button"
+          >
+            {val}
+          </Dropdown.Item>
+        ));
     return (
       <div className="container">
         <div className="AddUser-Wrapper">
-          <div className="title">Add Menu Item:</div>
+          <div className="title">Add Menu Item for {this.state.hkname}: </div>
+          <DropdownButton id="dropdown-item-button" title="Choose Home Kitchen">
+            {render_dropdown}
+          </DropdownButton>
           <form onSubmit={this.handlerSubmit}>
-            <label htmlFor="hkname">Home Name:</label>
-            <input
-              type="text"
-              placeholder="For example: Rajiv Ipsoo"
-              name="hkname"
-              onChange={this.onChangeHandler}
-              ref="hkname"
-              className="Add-User-Input"
-              required
-              minLength="3"
-              maxLength="33"
-              id="hkname"
-            />
             <label htmlFor="name">Name:</label>
             <input
               type="text"

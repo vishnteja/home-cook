@@ -26,7 +26,7 @@ class SignIn extends Component {
                   className="btn btn-primary btn-sm"
                   id="vishnu"
                 >
-                  <img class="profile" src={iconManager} alt="" />
+                  <img className="profile" src={iconManager} alt="" />
                   <h3>Manager</h3>
                 </div>
               </Link>
@@ -40,7 +40,7 @@ class SignIn extends Component {
                   className="btn btn-primary btn-sm"
                   id="vishnu"
                 >
-                  <img class="profile" src={iconDish} alt="" />
+                  <img className="profile" src={iconDish} alt="" />
                   <h3>Consumer</h3>
                 </div>
               </Link>
@@ -54,7 +54,7 @@ class SignIn extends Component {
                   className="btn btn-primary btn-sm"
                   id="vishnu"
                 >
-                  <img class="profile" src={iconWhisk} alt="" />
+                  <img className="profile" src={iconWhisk} alt="" />
                   <h3>Home Kitchen</h3>
                 </div>
               </Link>
