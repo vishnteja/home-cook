@@ -36,7 +36,7 @@ class AddItem extends Component {
     return (
       <div className="container">
         <div className="AddUser-Wrapper">
-          <h1>Add Food Item: </h1>
+          <div className="title">Add Menu Item:</div>
           <form onSubmit={this.handlerSubmit}>
             <label htmlFor="hkname">Home Name:</label>
             <input
@@ -91,12 +91,14 @@ class AddItem extends Component {
               required
               id="cost"
             />
-            <button type="submit" className="Add-User-Submit">
-              Submit
-            </button>
-            <button type="reset" className="Add-User-Reset">
-              Reset
-            </button>
+            <div className="container-btn">
+              <button type="submit" className="Add-User-Submit">
+                Submit
+              </button>
+              <button type="reset" className="Add-User-Reset">
+                Reset
+              </button>
+            </div>
           </form>
           <p>{this.state.response}</p>
         </div>

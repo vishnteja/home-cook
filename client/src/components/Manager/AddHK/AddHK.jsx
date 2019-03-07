@@ -42,7 +42,7 @@ class AddHK extends Component {
     return (
       <div className="container">
         <div className="AddUser-Wrapper">
-          <h1>Add Home Kitchen:</h1>
+          <div className="title">Add Home Kitchen:</div>
           <form onSubmit={this.handlerSubmit}>
             <label htmlFor="name">Name:</label>
             <input
@@ -114,7 +114,7 @@ class AddHK extends Component {
             <label htmlFor="address">Address: </label>
             <input
               type="text"
-              placeholder="ipsoo.raj@nik.com"
+              placeholder="Rd No 12, Banjara Hills, Hyderabad 5-----"
               name="address"
               minLength="5"
               maxLength="120"
@@ -124,12 +124,14 @@ class AddHK extends Component {
               required
               id="address"
             />
-            <button type="submit" className="Add-User-Submit">
-              Submit
-            </button>
-            <button type="reset" className="Add-User-Reset">
-              Reset
-            </button>
+            <div className="container-btn">
+              <button type="submit" className="Add-User-Submit">
+                Submit
+              </button>
+              <button type="reset" className="Add-User-Reset">
+                Reset
+              </button>
+            </div>
           </form>
           <p>{this.state.response}</p>
         </div>
