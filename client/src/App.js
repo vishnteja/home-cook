@@ -11,11 +11,14 @@ import HK from "./components/HK/HK";
 import AddDeli from "./components/Manager/AddDeli/AddDeli";
 import AddHK from "./components/Manager/AddHK/AddHK";
 import AddMenu from "./components/HK/AddMenu/AddMenu";
-import Consumer from "./components/Consumer/Consumer";
+import CHome from "./components/Consumer/Chome";
+import Cart from "./components/Consumer/Cart";
+import Orders from "./components/HK/Orders";
+import Delivery from "./components/Delivery/Delivery";
 
 class App extends Component {
   state = {
-    type: "Default",
+    type: 0,
     navKey: [1, 2, 3, 4]
   };
 
@@ -36,10 +39,13 @@ class App extends Component {
           />
           <Route path="/manager" component={Manager} exact />
           <Route path="/hk" component={HK} exact />
-          <Route path="/consumer" component={Consumer} exact />
+          <Route path="/consumer" component={CHome} exact />
           <Route path="/addDeli" component={AddDeli} exact />
           <Route path="/addHK" component={AddHK} exact />
           <Route path="/addMenu" component={AddMenu} exact />
+          <Route path="/cart" component={Cart} exact />
+          <Route path="/hkorders" component={Orders} exact />
+          <Route path="/delivery" component={Delivery} exact />
         </Switch>
       </React.Fragment>
     );

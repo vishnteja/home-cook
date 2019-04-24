@@ -50,10 +50,11 @@ class Consumer extends Component {
         this.state.data.map(val => <Value key={val._id} data={{ ...val }} />);
     else
       return (
-        <div className="Spinner-Wrapper">
-          {" "}
-          <GridLoader color={"#333"} />{" "}
-        </div>
+        // <div className="Spinner-Wrapper">
+        //   {" "}
+        //   <GridLoader color={"#333"} />{" "}
+        // </div>
+        <React.Fragment>No Results</React.Fragment>
       );
 
     if (this.state.error) return <h1>{this.state.error}</h1>;
