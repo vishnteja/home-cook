@@ -21,7 +21,7 @@ class SignIn extends Component {
               <Link to={{ pathname: "/manager" }}>
                 <div
                   onClick={() => {
-                    this.props.onLog("Manager");
+                    this.props.onLog(1);
                   }}
                   className="btn btn-primary btn-sm"
                   id="vishnu"
@@ -35,7 +35,7 @@ class SignIn extends Component {
               <Link to={{ pathname: "/consumer" }}>
                 <div
                   onClick={() => {
-                    this.props.onLog("Consumer");
+                    this.props.onLog(2);
                   }}
                   className="btn btn-primary btn-sm"
                   id="vishnu"
@@ -49,13 +49,27 @@ class SignIn extends Component {
               <Link to={{ pathname: "/hk" }}>
                 <div
                   onClick={() => {
-                    this.props.onLog("HK");
+                    this.props.onLog(3);
                   }}
                   className="btn btn-primary btn-sm"
                   id="vishnu"
                 >
                   <img className="profile" src={iconWhisk} alt="" />
                   <h3>Home Kitchen</h3>
+                </div>
+              </Link>
+            </div>
+            <div className="col">
+              <Link to={{ pathname: "/delivery" }}>
+                <div
+                  onClick={() => {
+                    this.props.onLog(4);
+                  }}
+                  className="btn btn-primary btn-sm"
+                  id="vishnu"
+                >
+                  <img className="profile" src={iconWhisk} alt="" />
+                  <h3>Delivery</h3>
                 </div>
               </Link>
             </div>

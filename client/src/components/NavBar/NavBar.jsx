@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./NavBar.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class NavBar extends Component {
   state = {
@@ -8,7 +8,7 @@ class NavBar extends Component {
   };
   NavBarLink = () => {
     switch (this.props.type) {
-      case "Manager":
+      case 1:
         return (
           <React.Fragment>
             <NavLink to="/manager" className="NavBar-Link">
@@ -22,7 +22,7 @@ class NavBar extends Component {
             </NavLink>
           </React.Fragment>
         );
-      case "HK":
+      case 3:
         return (
           <React.Fragment>
             <NavLink to="/hk" className="NavBar-Link">
@@ -31,10 +31,30 @@ class NavBar extends Component {
             <NavLink to="/addMenu" className="NavBar-Link">
               Add Menu Item
             </NavLink>
+            <NavLink to="/hkorders" className="NavBar-Link">
+              Orders
+            </NavLink>
           </React.Fragment>
         );
-      case "Customer":
-        break;
+      case 2:
+        return (
+          <React.Fragment>
+            <NavLink to="/consumer" className="NavBar-Link">
+              Home
+            </NavLink>
+            <NavLink to="/cart" className="NavBar-Link">
+              Cart
+            </NavLink>
+          </React.Fragment>
+        );
+      case 4:
+        return (
+          <React.Fragment>
+            <NavLink to="/delivery" className="NavBar-Link">
+              Home
+            </NavLink>
+          </React.Fragment>
+        );
       default:
         return <React.Fragment />;
     }
