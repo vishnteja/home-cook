@@ -5,6 +5,8 @@ const router = express.Router();
 const Delivery = require("../models/deliverySchema");
 const HK = require("../models/hkSchema");
 const Menu = require("../models/menuSchema");
+const Customer = require("../models/customerSchema");
+const Order = require("../models/orderSchema");
 
 //for deliverySchema
 
@@ -208,6 +210,147 @@ router.delete("/menu/:id", async (req, res) => {
   try {
     const removeMenu = await Menu.findByIdAndRemove(req.params.id);
     res.send({ message: "The menu item was removed" });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+//for customerSchema
+
+// @route   GET /api/customer/
+// @desc    Get all customers' details
+// @access  Public
+router.get("/customer/", async (req, res) => {
+  try {
+    const customers = await Customer.find({});
+    res.send({ customers });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   GET /api/customer/:id
+// @desc    Get a specific customer's details
+// @access  Public
+router.get("/customer/:id", async (req, res) => {
+  try {
+    const customer = await Customer.findById(req.params.id);
+    res.send({ customer });
+  } catch (err) {
+    res.status(404).send({ message: "Customer id not found!" });
+  }
+});
+
+// @route   POST /api/customer/
+// @desc    Create a customer
+// @access  Public
+router.post("/customer/", async (req, res) => {
+  try {
+    const newCustomer = await Customer.create({
+      name: req.body.name,
+      gender: req.body.gender,
+      age: req.body.age,
+      mobile: req.body.mobile,
+      email: req.body.email,
+      address: req.body.address
+    });
+    res.send({ newCustomer });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   PUT /api/customer/:id
+// @desc    Update a customer's details
+// @access  Public
+router.put("/customer/:id", async (req, res) => {
+  try {
+    const updatedCustomer = await Customer.findByIdAndUpdate(
+      req.params.id,
+      req.body
+    );
+    res.send({ message: "The customer's details were updated" });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   DELETE /api/customer/:id
+// @desc    Delete a customer
+// @access  Public
+router.delete("/customer/:id", async (req, res) => {
+  try {
+    const removeCustomer = await Customer.findByIdAndRemove(req.params.id);
+    res.send({ message: "The customer was removed" });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+//for orderSchema
+
+// @route   GET /api/order/
+// @desc    Get all orders' details
+// @access  Public
+router.get("/order/", async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    res.send({ orders });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   GET /api/order/:id
+// @desc    Get a specific order's details
+// @access  Public
+router.get("/order/:id", async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    res.send({ order });
+  } catch (err) {
+    res.status(404).send({ message: "Order id not found!" });
+  }
+});
+
+// @route   POST /api/order/
+// @desc    Create an order
+// @access  Public
+router.post("/order/", async (req, res) => {
+  try {
+    const newOrder = await Order.create({
+      cust_uname: req.body.cust_uname,
+      hk_uname: req.body.hk_uname,
+      del_uname: req.body.del_uname,
+      // food_details.name = req.body.food_details.name,
+      total: req.body.total,
+      order_status: req.body.order_status
+    });
+    res.send({ newOrder });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   PUT /api/order/:id
+// @desc    Update an order's details
+// @access  Public
+router.put("/order/:id", async (req, res) => {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body);
+    res.send({ message: "The order's details were updated" });
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+// @route   DELETE /api/order/:id
+// @desc    Delete an order
+// @access  Public
+router.delete("/order/:id", async (req, res) => {
+  try {
+    const removeOrder = await Order.findByIdAndRemove(req.params.id);
+    res.send({ message: "The order was removed" });
   } catch (err) {
     res.status(400).send({ error: err });
   }
