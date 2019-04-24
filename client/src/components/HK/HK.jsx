@@ -112,11 +112,14 @@ class HK extends Component {
     return (
       <React.Fragment>
         <div className="Table-Wrapper">
-          <h1>Menu: {this.state.selected_user} </h1>
+          <h1 className="results-title">
+            Menu from {this.state.selected_user}{" "}
+          </h1>
           <DropdownButton id="dropdown-item-button" title="Choose Home Kitchen">
             {render_dropdown}
           </DropdownButton>
           <Search searchValue={this.searchValue} />
+          <div className="table-div" />
           <table className="Table">
             <thead>
               <tr>

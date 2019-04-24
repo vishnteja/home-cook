@@ -5,7 +5,6 @@ mongoose.Promise = global.Promise;
 // const db_url = process.env.MONGO_ATLAS_URI;
 const db_url =
   "mongodb+srv://hkTester:pwd2318@test-k51n5.mongodb.net/test?retryWrites=true";
-// const db_url = "mongodb://localhost:27017/test";
 mongoose.connect(db_url, {
   // mongoose.connect("mongodb://localhost:27017/homeDB", {
   useNewUrlParser: true
