@@ -1,2 +1,7 @@
 node_modules
 .scannerwork
+.DS_Store
+.env
+*.orig
+.idea/
+.vscode/
