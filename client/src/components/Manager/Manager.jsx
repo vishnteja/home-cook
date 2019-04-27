@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 // GUI components
-import { GridLoader } from "react-spinners";
+// import { GridLoader } from "react-spinners";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 import "./Manager.css";
 import Search from "../utils/Search/Search";
@@ -12,8 +12,6 @@ class Manager extends Component {
     data: null,
     delivery_data: null,
     hk_data: null,
-    option: 1,
-    // display_data: null,
     error: ""
   };
 
@@ -21,10 +19,12 @@ class Manager extends Component {
   async componentDidMount() {
     try {
       let delivery_response = await axios("/api/delivery/");
+      console.log(delivery_response);
       let hk_response = await axios("/api/hk/");
+      // console.log(delivery_response);
+      console.log(hk_response);
       this.setState({ delivery_data: delivery_response.data.deliveryDudes });
       this.setState({ hk_data: hk_response.data.hks });
-      this.setState({ option: 1 });
       this.setState({ data: this.state.delivery_data });
     } catch (err) {
       this.setState({ error: err.message });
@@ -83,13 +83,7 @@ class Manager extends Component {
       values =
         this.state.data &&
         this.state.data.map(val => <Value key={val._id} data={{ ...val }} />);
-    else
-      return (
-        <div className="Spinner-Wrapper">
-          {" "}
-          <GridLoader color={"#333"} />{" "}
-        </div>
-      );
+    else return <h4>Loading</h4>;
 
     if (this.state.error) return <h1>{this.state.error}</h1>;
     if (this.state.data !== null)
@@ -98,42 +92,43 @@ class Manager extends Component {
     let arr = ["Delivery Person", "Home Kitchen"];
     return (
       <React.Fragment>
-        <div className="Table-Wrapper">
-          <h1 className="results-title">
-            Showing {arr[parseInt(this.state.option, 10) - 1]}{" "}
-          </h1>
-          <DropdownButton id="dropdown-item-button" title="Choose">
-            <Dropdown.Item
-              eventKey="1"
-              onSelect={this.onSelectHandler}
-              as="button"
-            >
-              Delivery Person
-            </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="2"
-              onSelect={this.onSelectHandler}
-              as="button"
-            >
-              Home Kitchen
-            </Dropdown.Item>
-          </DropdownButton>
-          <Search searchValue={this.searchValue} />
-          <div className="table-div" />
-          <table className="Table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Age</th>
-                <th>Mobile</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>{values}</tbody>
-          </table>
+        <div className="container">
+          <div className="Table-Wrapper">
+            <h1 className="results-title">
+              Showing {arr[parseInt(this.state.option, 10) - 1]}{" "}
+            </h1>
+            <DropdownButton id="dropdown-item-button" title="Choose">
+              <Dropdown.Item
+                eventKey="1"
+                onSelect={this.onSelectHandler}
+                as="button"
+              >
+                Delivery Person
+              </Dropdown.Item>
+              <Dropdown.Item
+                eventKey="2"
+                onSelect={this.onSelectHandler}
+                as="button"
+              >
+                Home Kitchen
+              </Dropdown.Item>
+            </DropdownButton>
+            <Search searchValue={this.searchValue} />
+            <div className="table-div" />
+            <table className="Table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Age</th>
+                  <th>Mobile</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>{values}</tbody>
+            </table>
+          </div>
         </div>
-        {this.props.children}
       </React.Fragment>
     );
   }

@@ -1,41 +1,58 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   removeItem,
   addQuantity,
   subtractQuantity,
   checkout
 } from "../../actions/cartActions";
+import axios from "axios";
 
-class DOrders extends Component {
+class Cart extends Component {
   state = {
-    orders: null,
-    finished_orders: null,
-    flag: true
+    error: ""
   };
 
-  handleAcceptOrder = args => {
-    console.log("Accepted Order");
+  //to remove the item completely
+  handleRemove = id => {
+    this.props.removeItem(id);
+  };
+  //to add the quantity
+  handleAddQuantity = id => {
+    this.props.addQuantity(id);
+  };
+  //to substruct from the quantity
+  handleSubtractQuantity = id => {
+    this.props.subtractQuantity(id);
   };
 
-  handleDeliverOrder = args => {
-    console.log("Delivered Order");
+  handleCheckout = async e => {
+    try {
+      for (var i = 0; i < this.props.items.length; i++) {
+        let temp = this.props.items[i];
+        let org_item = this.props.data.find(item => item._id === temp._id);
+        if (org_item.count >= temp.count) {
+          org_item.count -= temp.count;
+          // Update Database
+          const newOrder = await axios.post("/api/order/", {
+            cust_uname: this.props.custname,
+            hk_uname: org_item.hkname,
+            del_uname: "Default",
+            total: this.props.total,
+            order_status: "accepted"
+          });
+          console.log(newOrder);
+        } else {
+          console.log("Invalid Transaction");
+        }
+      }
+    } catch (err) {
+      this.setState({ error: err.message });
+    }
+    this.props.checkout([]);
   };
 
-  handleCancelOrder = args => {
-    console.log("Cancelled Order");
-  };
-
-  handleOpen = args => {
-    console.log("Open for Business!");
-    this.setState({ flag: false });
-  };
-
-  handleClose = args => {
-    console.log("Closed for Business!");
-    this.setState({ flag: true });
-  };
   render() {
     var addedItems;
     if (this.props.items.length > 0) {
@@ -47,16 +64,17 @@ class DOrders extends Component {
                 <span className="title">{item.name}</span>
                 {/* <p>{item.desc}</p> */}
                 <p>
+                  <b>Price: {item.cost} $</b>
                   <b>Quantity: {item.count}</b>
                 </p>
                 <div className="add-remove">
                   <Link to="/cart">
                     <button
                       onClick={() => {
-                        this.handleAcceptOrder(item._id);
+                        this.handleAddQuantity(item._id);
                       }}
                     >
-                      Accept
+                      Add
                     </button>
                   </Link>
                 </div>
@@ -64,20 +82,20 @@ class DOrders extends Component {
                   <Link to="/cart">
                     <button
                       onClick={() => {
-                        this.handleDeliverOrder(item._id);
+                        this.handleSubtractQuantity(item._id);
                       }}
                     >
-                      Deliver
+                      Sub
                     </button>
                   </Link>
                 </div>
                 <div className="add-remove">
                   <button
                     onClick={() => {
-                      this.handleCancelOrder(item._id);
+                      this.handleRemove(item._id);
                     }}
                   >
-                    Cancel
+                    Remove
                   </button>
                 </div>
               </div>
@@ -86,63 +104,40 @@ class DOrders extends Component {
         );
       });
     } else {
-      if (this.state.flag) {
-        addedItems = (
-          <React.Fragment>
-            <p>Closed For Business</p>
-          </React.Fragment>
-        );
-      } else {
-        addedItems = (
-          <React.Fragment>
-            <p>Empty Cart</p>
-          </React.Fragment>
-        );
-      }
-    }
-    let avail;
-    if (this.state.flag) {
-      avail = (
-        <button
-          onClick={() => {
-            this.handleOpen();
-          }}
-        >
-          Open
-        </button>
-      );
-    } else {
-      avail = (
-        <button
-          onClick={() => {
-            this.handleClose();
-          }}
-        >
-          Close
-        </button>
+      addedItems = (
+        <React.Fragment>
+          <p>Empty Cart</p>
+        </React.Fragment>
       );
     }
+
     return (
-      <React.Fragment>
-        <div className="container">
-          <div className="cart">
-            <h5>ORDERS</h5>
-            {avail}
-            <ul className="collection">{addedItems}</ul>
-          </div>
+      <div className="container">
+        <div className="cart">
+          <h5>You have ordered:</h5>
+          <ul className="collection">{addedItems}</ul>
+          <button
+            onClick={() => {
+              this.handleCheckout();
+            }}
+          >
+            Checkout
+          </button>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
-    items: state.cart.orders
-    //   data: state.data
+    items: state.cart.addedItems,
+    data: state.cart.data,
+    total: state.cart.total,
+    custname: state.auth.user.name
     //addedItems: state.addedItems
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     removeItem: id => {
@@ -159,8 +154,7 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DOrders);
+)(Cart);

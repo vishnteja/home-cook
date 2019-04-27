@@ -7,14 +7,26 @@ import {
   subtractQuantity,
   checkout
 } from "../../actions/cartActions";
+import axios from "axios";
 
 class Orders extends Component {
   state = {
-    orders: null,
+    orders: [],
     finished_orders: null,
     flag: true
   };
 
+  async componentDidMount() {
+    try {
+      let food_resp = await axios("/api/order/");
+      let list_data_filtered = food_resp.data.orders.filter(({ hk_uname }) =>
+        hk_uname.toLowerCase().includes(this.props.hkname.toLowerCase())
+      );
+      this.setState({ orders: list_data_filtered });
+    } catch (err) {
+      this.setState({ error: err.message });
+    }
+  }
   handleAcceptOrder = args => {
     console.log("Accepted Order");
   };
@@ -39,13 +51,16 @@ class Orders extends Component {
 
   render() {
     var addedItems;
-    if (this.props.items.length > 0) {
-      addedItems = this.props.items.map(item => {
+    if (this.state.orders.length > 0) {
+      addedItems = this.state.orders.map(item => {
         return (
           <React.Fragment>
             <div className="collection-item avatar" key={item._id}>
               <div className="item-desc">
-                <span className="title">{item.name}</span>
+                <span className="title">{item.cust_uname}</span>
+                <span className="title">{item.hk_uname}</span>
+                <span className="title">{item.del_uname}</span>
+                <span className="title">{item.total}</span>
                 {/* <p>{item.desc}</p> */}
                 <p>
                   <b>Quantity: {item.count}</b>
@@ -140,7 +155,8 @@ class Orders extends Component {
 
 const mapStateToProps = state => {
   return {
-    items: state.orders
+    items: state.cart.orders,
+    hkname: state.auth.user.name
     //   data: state.data
     //addedItems: state.addedItems
   };

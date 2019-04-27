@@ -23,7 +23,7 @@ const initState = {
   orders: []
 };
 
-const cartReducer = (state = initState, action) => {
+export default function(state = initState, action) {
   // LOAD DATA FIRST TIME
   if (action.type === LOAD_DATA) {
     var arr = [];
@@ -157,6 +157,4 @@ const cartReducer = (state = initState, action) => {
   }
 
   return state;
-};
-
-export default cartReducer;
+}

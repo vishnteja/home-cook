@@ -1,27 +1,34 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const path = require("path");
-require("./models/db");
+const passport = require("passport");
+
+const customer = require("./routes/customer");
+
 const app = express();
 
-require("dotenv").config;
-
-const PORT = process.env.PORT || 5000;
-
+// Bodyparser middleware
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(require("cors")());
-app.use(require("helmet")());
-app.use("/api", require("./routes/apiEndpoints"), (req, res) => {
-  console.log("Reached Server");
-});
 
-// Production
-// testing production remote
-// Set static folder
-app.use(express.static("client/build"));
-app.get("*", (req, res) => {
-  res.sendfile(path.resolve(__dirname, "client", "build", "index.html"));
-});
+// DB Config
+const db = require("./config/keys").mongoURI;
+// Connect to MongoDB
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch(err => console.log(err));
 
-app.listen(PORT, () => console.log(`App running on port ${PORT}`));
+// Passport middleware
+app.use(passport.initialize());
+// Passport config
+require("./config/passport")(passport);
+// Routes
+app.use("/api", customer);
+
+const port = process.env.PORT || 5000; // process.env.port is Heroku's port if you choose to deploy the app there
+app.listen(port, () => console.log(`Server up and running on port ${port} !`));

@@ -1,53 +1,37 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
-
 import "./App.css";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { Provider } from "react-redux";
+import store from "./store";
 
-//components
-import Navbar from "./components/NavBar/NavBar";
-import SignIn from "./components/SignIn/SignIn";
-import Manager from "./components/Manager/Manager";
-import HK from "./components/HK/HK";
-import AddDeli from "./components/Manager/AddDeli/AddDeli";
-import AddHK from "./components/Manager/AddHK/AddHK";
-import AddMenu from "./components/HK/AddMenu/AddMenu";
-import CHome from "./components/Consumer/Chome";
-import Cart from "./components/Consumer/Cart";
-import Orders from "./components/HK/Orders";
-import Delivery from "./components/Delivery/Delivery";
+import Master from "./components/Master";
+
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+  // Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Redirect to login
+    window.location.href = "./login";
+  }
+}
 
 class App extends Component {
-  state = {
-    type: 0,
-    navKey: [1, 2, 3, 4]
-  };
-
-  setType = typeString => {
-    // console.log(typeString);
-    this.setState({ type: typeString });
-  };
-
   render() {
     return (
-      <React.Fragment>
-        <Navbar type={this.state.type} />
-        <Switch>
-          <Route
-            path="/"
-            render={() => <SignIn onLog={this.setType} />}
-            exact
-          />
-          <Route path="/manager" component={Manager} exact />
-          <Route path="/hk" component={HK} exact />
-          <Route path="/consumer" component={CHome} exact />
-          <Route path="/addDeli" component={AddDeli} exact />
-          <Route path="/addHK" component={AddHK} exact />
-          <Route path="/addMenu" component={AddMenu} exact />
-          <Route path="/cart" component={Cart} exact />
-          <Route path="/hkorders" component={Orders} exact />
-          <Route path="/delivery" component={Delivery} exact />
-        </Switch>
-      </React.Fragment>
+      <Provider store={store}>
+        <Master />
+      </Provider>
     );
   }
 }
