@@ -4,12 +4,10 @@
   "description": "authentication base",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "dev": "concurrently \"nodemon server.js\" \"cd client && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
     "node": "10.15.1"
