@@ -55,7 +55,7 @@ class NavBar extends Component {
         case "MANAGER":
           userLinks = (
             <React.Fragment>
-              <NavLink to="/manager" className="NavBar-Link">
+              <NavLink to="/chome" className="NavBar-Link">
                 Home
               </NavLink>
               <NavLink to="/addDeli" className="NavBar-Link">
@@ -71,7 +71,7 @@ class NavBar extends Component {
         case "HK":
           userLinks = (
             <React.Fragment>
-              <NavLink to="/hk" className="NavBar-Link">
+              <NavLink to="/chome" className="NavBar-Link">
                 Home
               </NavLink>
               <NavLink to="/addMenu" className="NavBar-Link">
