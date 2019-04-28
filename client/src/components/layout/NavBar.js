@@ -18,16 +18,7 @@ class NavBar extends Component {
     let logout;
     if (this.props.auth.isAuthenticated) {
       logout = (
-        <button
-          style={{
-            width: "150px",
-            borderRadius: "3px",
-            letterSpacing: "1.5px",
-            marginTop: "1rem"
-          }}
-          onClick={this.onLogoutClick}
-          className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-        >
+        <button onClick={this.onLogoutClick} className="btn btn-large">
           Logout
         </button>
       );
@@ -111,16 +102,14 @@ class NavBar extends Component {
           <div className="nav-wrapper white">
             <Link
               to="/"
-              style={{
-                fontFamily: "georgia"
-              }}
               className="col s5 brand-logo left black-text"
+              id="brand-logo"
             >
-              HOME-KITCHEN
+              YummyMummy
             </Link>
-            <div className="NavBar-Wrapper">
+            <div className="topnav-right">
               <div className="NavBar-Link"> {userLinks}</div>
-              {logout}
+              <div className="button-holder">{logout}</div>
             </div>
           </div>
         </nav>
