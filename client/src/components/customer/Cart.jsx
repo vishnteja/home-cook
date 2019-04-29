@@ -35,6 +35,10 @@ class Cart extends Component {
         let org_item = this.props.data.find(item => item._id === temp._id);
         if (org_item.count >= temp.count) {
           org_item.count -= temp.count;
+          await axios.put("/api/menu/" + org_item._id, {
+            count: org_item.count,
+            _id: org_item._id
+          });
           // Update Database
           const newOrder = await axios.post("/api/order/", {
             cust_uname: this.props.custname,
@@ -44,7 +48,10 @@ class Cart extends Component {
             order_status: "accepted"
           });
           console.log(newOrder);
+          this.props.checkout();
+          this.setState({ disp: "Transaction Successful" });
         } else {
+          this.setState({ disp: "Transaction Invalid" });
           console.log("Invalid Transaction");
         }
       }
@@ -125,6 +132,8 @@ class Cart extends Component {
             Checkout
           </button>
         </div>
+        {this.state.disp}
+        {this.state.error}
       </div>
     );
   }

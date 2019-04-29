@@ -141,6 +141,10 @@ export default function(state = initState, action) {
   }
 
   if (action.type === CHECKOUT) {
+    return {
+      ...state,
+      addedItems: []
+    };
   }
 
   if (action.type === LOAD_ORDERS) {
