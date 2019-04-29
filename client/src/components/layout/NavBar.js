@@ -34,10 +34,10 @@ class NavBar extends Component {
           userLinks = (
             <React.Fragment>
               <NavLink to="/chome" className="NavBar-Link">
-                Home
+                HOME
               </NavLink>
               <NavLink to="/cart" className="NavBar-Link">
-                Cart
+                CART
               </NavLink>
             </React.Fragment>
           );

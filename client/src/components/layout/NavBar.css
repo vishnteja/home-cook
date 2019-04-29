@@ -5,8 +5,11 @@
   align-items: center;
   height: 30px;
   color: #000;
-  padding-top: 65px;
+  padding-top: 50px;
   padding-left: 300px;
+  padding-bottom: 50px;
+  box-shadow: 0 9px 13px 0 rgba(0, 0, 0, 0.1);
+  border-bottom-color: black;
 }
 
 .NavBar-Title {
@@ -18,19 +21,23 @@
 }
 
 #brand-logo {
-  padding-top: 30px;
-  padding-left: 80px;
+  padding-top: 10px;
+  padding-left: 100px;
   padding-right: 80px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-weight: bold;
-  font-size: 50px;
-  color: rgba(110, 132, 146, 0.774);
+  font-size: 45px;
+  color: #828384;
+}
+
+#brand-logo:hover {
+  color: #828384;
 }
 
 .NavBar-Title:hover {
-  color: rgba(60, 67, 131, 0.247);
+  color: #828384;
   text-decoration-line: none;
 }
 
@@ -41,16 +48,17 @@
   /* margin-top: 1rem; */
   padding-top: -50px;
   padding-left: 100px;
+  padding-bottom: 5px;
 }
 
 .NavBar-Link {
   padding: 0.8rem;
-  font-size: 20px;
+  font-size: 18px;
   color: #828384;
   transition: 0.7s color ease;
 }
 
 .NavBar-Link:hover {
-  color: rgba(60, 67, 131, 0.247);
+  color: rgba(6, 23, 172, 0.247);
   text-decoration-line: none;
 }
