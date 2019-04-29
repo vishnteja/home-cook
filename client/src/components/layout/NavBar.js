@@ -39,6 +39,9 @@ class NavBar extends Component {
               <NavLink to="/cart" className="NavBar-Link">
                 CART
               </NavLink>
+              <NavLink to="/corders" className="NavBar-Link">
+                Orders
+              </NavLink>
             </React.Fragment>
           );
           // this.setState({ type: "CUSTOMER" });

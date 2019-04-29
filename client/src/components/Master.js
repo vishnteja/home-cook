@@ -18,6 +18,7 @@ import HKOrders from "./hk/Orders.jsx";
 import Delivery from "./delivery/Delivery";
 import MOrders from "./manager/MOrders";
 import Dashboard from "./manager/Dashboard";
+import Corders from "./customer/Corders";
 
 class Master extends Component {
   render() {
@@ -28,6 +29,7 @@ class Master extends Component {
           <Switch>
             <PrivateRoute exact path="/chome" component={CHome} />
             <PrivateRoute exact path="/cart" component={Cart} />
+            <PrivateRoute exact path="/corders" component={Corders} />
           </Switch>
         );
         break;
