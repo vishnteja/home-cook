@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
+import "./Chome.css";
 
 import {
   addToCart,
@@ -45,33 +46,40 @@ class Chome extends Component {
     let localData = this.props.cart;
     let itemList = localData.data.map(item => {
       return (
-        <div className="card" key={item._id}>
-          <div className="card-content">
-            <p>
-              <b>{item.name}</b>
-              <br />
-              <b>Price: {item.cost} $</b>
-              <br />
-              <b>Quantity: {item.count}</b>
-            </p>
-            <button
-              className="Add-User-Reset"
-              onClick={() => {
-                this.handleClick(item._id);
-              }}
-            >
-              Add
-            </button>
+        <div classNmae="all-holder">
+          <div className="card" key={item._id}>
+            <div className="card-content">
+              <p>
+                <b>{item.name}</b>
+                <br />
+                <b>Home Kitchen: {item.hkname}</b>
+                <br />
+                <b>Price: ₹{item.cost}</b>
+                <br />
+                <b>Quantity: {item.count}</b>
+              </p>
+              <button
+                className="btn btn-large"
+                id="button"
+                onClick={() => {
+                  this.handleClick(item._id);
+                }}
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       );
     });
 
     return (
-      <div className="container">
+      <div className="container-top">
+        <h3 className="left">Go on, get spoilt for choice!</h3>
         <Search searchValue={this.searchValue} />
-        <h3 className="center">Results</h3>
-        <div className="box">{itemList}</div>
+        <div className="wrapper">
+          <div className="box">{itemList}</div>
+        </div>
       </div>
     );
   }

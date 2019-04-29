@@ -120,7 +120,6 @@ class Manager extends Component {
                 <tr>
                   <th>Name</th>
                   <th>Gender</th>
-                  <th>Age</th>
                   <th>Mobile</th>
                   <th>Email</th>
                 </tr>
