@@ -6,11 +6,12 @@ import {
   addQuantity,
   subtractQuantity,
   checkout,
-  updateOrders
+  updateOrders,
+  loadOrders
 } from "../../actions/cartActions";
 import axios from "axios";
 
-class DOrders extends Component {
+class Orders extends Component {
   state = {
     orders: [],
     finished_orders: null,
@@ -19,7 +20,11 @@ class DOrders extends Component {
   async update() {
     try {
       let food_resp = await axios("/api/order/");
-      let list_data_filtered = food_resp.data.orders;
+      let list_data_filtered = food_resp.data.orders.filter(({ hk_uname }) =>
+        hk_uname
+          .toLowerCase()
+          .includes(this.props.match.params.name.toLowerCase())
+      );
       this.setState({ orders: list_data_filtered });
     } catch (err) {
       this.setState({ error: err.message });
@@ -28,31 +33,33 @@ class DOrders extends Component {
   async componentDidMount() {
     try {
       let food_resp = await axios("/api/order/");
-      // let list_data_filtered = food_resp.data.orders.filter(() =>
-      //   console.log("Fin")
-      // );
-      let list_data_filtered = food_resp.data.orders;
-      console.log(list_data_filtered);
+      console.log(this.props.match.params.name);
+      let list_data_filtered = food_resp.data.orders.filter(({ hk_uname }) =>
+        hk_uname
+          .toLowerCase()
+          .includes(this.props.match.params.name.toLowerCase())
+      );
       this.setState({ orders: list_data_filtered });
     } catch (err) {
       this.setState({ error: err.message });
     }
   }
-
-  handlePickOrder = args => {
-    this.props.updateOrders({
-      order_status: "on delivery",
-      _id: args,
-      del_uname: this.props.user
-    });
+  handleAcceptOrder = args => {
+    this.props.updateOrders({ order_status: "accepted", _id: args });
     this.update();
     console.log("Accepted Order");
   };
 
-  handleDropOrder = args => {
-    this.props.updateOrders({ order_status: "completed", _id: args });
-    this.update();
+  handleDeliverOrder = args => {
+    this.props.updateOrders({ order_status: "delivery", _id: args });
     console.log("Delivered Order");
+    this.update();
+  };
+
+  handleCancelOrder = args => {
+    this.props.updateOrders({ order_status: "rejected", _id: args });
+    console.log("Cancelled Order");
+    this.update();
   };
 
   handleOpen = args => {
@@ -64,9 +71,11 @@ class DOrders extends Component {
     console.log("Closed for Business!");
     this.setState({ flag: true });
   };
+
   render() {
     var addedItems;
-    if (this.state.orders.length > 0 && !this.state.flag) {
+    console.log("Yeah");
+    if (this.state.orders.length > 0) {
       addedItems = this.state.orders.map(item => {
         return (
           <React.Fragment>
@@ -82,22 +91,37 @@ class DOrders extends Component {
                   <b>Order Status: {item.order_status}</b>
                 </p>
                 <div className="add-remove">
-                  <button
-                    onClick={() => {
-                      this.handlePickOrder(item._id);
-                    }}
-                  >
-                    Pick
-                  </button>
+                  <Link to="/hkorders">
+                    <button
+                      onClick={() => {
+                        this.handleAcceptOrder(item._id);
+                      }}
+                    >
+                      Accept
+                    </button>
+                  </Link>
                 </div>
                 <div className="add-remove">
-                  <button
-                    onClick={() => {
-                      this.handleDropOrder(item._id);
-                    }}
-                  >
-                    Drop
-                  </button>
+                  <Link to="/hkorders">
+                    <button
+                      onClick={() => {
+                        this.handleDeliverOrder(item._id);
+                      }}
+                    >
+                      Deliver
+                    </button>
+                  </Link>
+                </div>
+                <div className="add-remove">
+                  <Link to="/hkorders">
+                    <button
+                      onClick={() => {
+                        this.handleCancelOrder(item._id);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -119,6 +143,7 @@ class DOrders extends Component {
         );
       }
     }
+
     let avail;
     if (this.state.flag) {
       avail = (
@@ -144,9 +169,8 @@ class DOrders extends Component {
     return (
       <React.Fragment>
         <div className="container">
-          <h1>Delivery Person</h1>
           <div className="cart">
-            <h5>ORDERS</h5>
+            <h5>Showing orders for {this.props.match.params.name}</h5>
             {avail}
             <ul className="collection">{addedItems}</ul>
           </div>
@@ -155,10 +179,11 @@ class DOrders extends Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     items: state.cart.orders,
-    user: state.auth.user.name
+    hkname: state.auth.user.name
     //   data: state.data
     //addedItems: state.addedItems
   };
@@ -180,6 +205,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateOrders: arg => {
       dispatch(updateOrders(arg));
+    },
+    loadOrders: arg => {
+      dispatch(loadOrders(arg));
     }
   };
 };
@@ -187,4 +215,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DOrders);
+)(Orders);

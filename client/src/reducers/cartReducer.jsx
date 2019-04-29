@@ -10,6 +10,7 @@ import {
   LOAD_ORDERS,
   UPDATE_ORDERS
 } from "../constants/cart-actions";
+import axios from "axios";
 
 var cart_n = 0;
 
@@ -143,6 +144,7 @@ export default function(state = initState, action) {
   }
 
   if (action.type === LOAD_ORDERS) {
+    console.log(action.order_arr);
     return {
       ...state,
       orders: action.order_arr
@@ -150,6 +152,8 @@ export default function(state = initState, action) {
   }
 
   if (action.type === UPDATE_ORDERS) {
+    let obj = action.new_order_arr;
+    axios.put("/api/order/" + obj._id, obj).catch(err => console.log(err));
     return {
       ...state,
       orders: action.new_order_arr
