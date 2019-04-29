@@ -71,6 +71,7 @@ class Orders extends Component {
     var addedItems;
     if (this.state.orders.length > 0) {
       addedItems = this.state.orders.map(item => {
+        console.log(item);
         return (
           <React.Fragment>
             <div className="collection-item avatar" key={item._id}>
