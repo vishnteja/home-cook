@@ -5,3 +5,4 @@ module.exports = {
 };
 
 // "mongodb+srv://vishnteja:vishnu98@home-kitchen-a5z50.mongodb.net/test?retryWrites=true"
+// "mongodb+srv://hkTester:pwd2318@test-k51n5.mongodb.net/test?retryWrites=true"

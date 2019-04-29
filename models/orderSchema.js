@@ -36,7 +36,7 @@ const orderSchema = new mongoose.Schema({
     required: true,
     maxlength: 9,
     trim: true,
-    enum: ["accepted", "delivery", "rejected", "completed"]
+    enum: ["accepted", "delivery", "rejected", "completed", "on delivery"]
   }
 });
 

@@ -78,10 +78,7 @@ class NavBar extends Component {
         case "DELIVERY":
           userLinks = (
             <React.Fragment>
-              <NavLink
-                to="/delivery"
-                className="col s5 brand-logo center black-text"
-              >
+              <NavLink to="/chome" className="NavBar-Link">
                 Home
               </NavLink>
             </React.Fragment>

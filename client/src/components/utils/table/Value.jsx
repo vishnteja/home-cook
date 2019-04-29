@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./Value.css";
 
 class Value extends Component {
@@ -6,9 +7,10 @@ class Value extends Component {
   render() {
     return (
       <tr>
-        <td>{this.props.data.name}</td>
+        <Link to={"/morders/" + this.props.data.name}>
+          <td>{this.props.data.name}</td>
+        </Link>
         <td>{this.props.data.gender}</td>
-        <td>{this.props.data.age}</td>
         <td>{this.props.data.mobile}</td>
         <td>{this.props.data.email}</td>
       </tr>

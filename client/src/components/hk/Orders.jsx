@@ -5,7 +5,9 @@ import {
   removeItem,
   addQuantity,
   subtractQuantity,
-  checkout
+  checkout,
+  updateOrders,
+  loadOrders
 } from "../../actions/cartActions";
 import axios from "axios";
 
@@ -15,7 +17,17 @@ class Orders extends Component {
     finished_orders: null,
     flag: true
   };
-
+  async update() {
+    try {
+      let food_resp = await axios("/api/order/");
+      let list_data_filtered = food_resp.data.orders.filter(({ hk_uname }) =>
+        hk_uname.toLowerCase().includes(this.props.hkname.toLowerCase())
+      );
+      this.setState({ orders: list_data_filtered });
+    } catch (err) {
+      this.setState({ error: err.message });
+    }
+  }
   async componentDidMount() {
     try {
       let food_resp = await axios("/api/order/");
@@ -28,15 +40,21 @@ class Orders extends Component {
     }
   }
   handleAcceptOrder = args => {
+    this.props.updateOrders({ order_status: "accepted", _id: args });
+    this.update();
     console.log("Accepted Order");
   };
 
   handleDeliverOrder = args => {
+    this.props.updateOrders({ order_status: "delivery", _id: args });
     console.log("Delivered Order");
+    this.update();
   };
 
   handleCancelOrder = args => {
+    this.props.updateOrders({ order_status: "rejected", _id: args });
     console.log("Cancelled Order");
+    this.update();
   };
 
   handleOpen = args => {
@@ -64,9 +82,10 @@ class Orders extends Component {
                 {/* <p>{item.desc}</p> */}
                 <p>
                   <b>Quantity: {item.count}</b>
+                  <b>Order Status: {item.order_status}</b>
                 </p>
                 <div className="add-remove">
-                  <Link to="/cart">
+                  <Link to="/hkorders">
                     <button
                       onClick={() => {
                         this.handleAcceptOrder(item._id);
@@ -77,7 +96,7 @@ class Orders extends Component {
                   </Link>
                 </div>
                 <div className="add-remove">
-                  <Link to="/cart">
+                  <Link to="/hkorders">
                     <button
                       onClick={() => {
                         this.handleDeliverOrder(item._id);
@@ -88,13 +107,15 @@ class Orders extends Component {
                   </Link>
                 </div>
                 <div className="add-remove">
-                  <button
-                    onClick={() => {
-                      this.handleCancelOrder(item._id);
-                    }}
-                  >
-                    Cancel
-                  </button>
+                  <Link to="/hkorders">
+                    <button
+                      onClick={() => {
+                        this.handleCancelOrder(item._id);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -175,6 +196,12 @@ const mapDispatchToProps = dispatch => {
     },
     checkout: arg => {
       dispatch(checkout(arg));
+    },
+    updateOrders: arg => {
+      dispatch(updateOrders(arg));
+    },
+    loadOrders: arg => {
+      dispatch(loadOrders(arg));
     }
   };
 };
