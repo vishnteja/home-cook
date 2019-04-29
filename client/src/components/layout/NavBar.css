@@ -1,20 +1,32 @@
-.NavBar-Wrapper {
+.topnav-right {
   background-color: rgb(255, 255, 255);
   display: flex;
   justify-content: space-around;
   align-items: center;
   height: 30px;
   color: #000;
-  padding-top: 2px;
+  padding-top: 65px;
+  padding-left: 300px;
 }
 
 .NavBar-Title {
   font-weight: bold;
   font-size: 40px;
-  padding-left: 1rem;
-  /* color: rgba(87, 80, 80, 0.774); */
+  padding-left: 0.8rem;
   color: #828384;
   transition: 0.7s color ease;
+}
+
+#brand-logo {
+  padding-top: 30px;
+  padding-left: 80px;
+  padding-right: 80px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+  color: rgba(110, 132, 146, 0.774);
 }
 
 .NavBar-Title:hover {
@@ -22,9 +34,18 @@
   text-decoration-line: none;
 }
 
+.button-holder {
+  width: 150px;
+  border-radius: 3px;
+  letter-spacing: 1.5px;
+  /* margin-top: 1rem; */
+  padding-top: -50px;
+  padding-left: 100px;
+}
+
 .NavBar-Link {
   padding: 0.8rem;
-  font-size: 18px;
+  font-size: 20px;
   color: #828384;
   transition: 0.7s color ease;
 }
