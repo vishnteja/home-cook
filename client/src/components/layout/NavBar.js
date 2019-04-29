@@ -49,6 +49,9 @@ class NavBar extends Component {
               <NavLink to="/chome" className="NavBar-Link">
                 Home
               </NavLink>
+              <NavLink to="/dash" className="NavBar-Link">
+                Dashboard
+              </NavLink>
               <NavLink to="/addDeli" className="NavBar-Link">
                 Add Delivery Personnel
               </NavLink>
